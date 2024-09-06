@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:123456@db:5432/fastapi_assignment
+      - DB_HOST=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=123456
+      - DB_NAME=fastapi_assignment
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=fastapi_assignment
+
+volumes:
+  postgres_data:
